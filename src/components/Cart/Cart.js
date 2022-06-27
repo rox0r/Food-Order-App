@@ -1,5 +1,6 @@
 import React from "react";
-import Card from "../UI/Card";
+import Modal from "../UI/Modal";
+
 import classes from "./Cart.module.css";
 
 function Cart() {
@@ -7,14 +8,14 @@ function Cart() {
     <ul className={classes["cart-items"]}>
       {[{ id: "c1", name: "Sushi", price: "12.99", quantity: "2" }].map(
         (item) => {
-          return <li>{item.name}</li>;
+          return <li key={item.id}>{item.name}</li>;
         }
       )}
     </ul>
   );
 
   return (
-    <div>
+    <Modal>
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
@@ -24,7 +25,7 @@ function Cart() {
         <button className={classes["button--alt"]}>Close</button>
         <button className={classes.button}>Order</button>
       </div>
-    </div>
+    </Modal>
   );
 }
 
