@@ -3,7 +3,7 @@ import Input from "../../UI/Input";
 import classes from "./MealItemForm.module.css";
 
 function MealItemForm(props) {
-  const [amountIsValid, setamountIsValid] = useState(true);
+  const [quantityIsValid, setQuantityIsValid] = useState(true);
   const quantityInputRef = useRef();
 
   function submitHander(event) {
@@ -17,7 +17,7 @@ function MealItemForm(props) {
       enteredQuantityNumber < 1 ||
       enteredQuantityNumber > 10
     ) {
-      setamountIsValid(false);
+      setQuantityIsValid(false);
       return;
     }
     //When entered Quantity is valid
@@ -27,17 +27,17 @@ function MealItemForm(props) {
   const inputParams = {
     id: "Quantity_" + props.mealId,
     type: "number",
-    value: "1",
     min: "1",
     max: "10",
     step: "1",
+    defaultValue: "1",
   };
 
   return (
     <form className={classes.form} onSubmit={submitHander}>
       <Input ref={quantityInputRef} label="Quantity" input={inputParams} />
       <button>+ Add</button>
-      {!amountIsValid && <p>Please Enter a valid quantity between (1-10).</p>}
+      {!quantityIsValid && <p>Please Enter a valid quantity between (1-10).</p>}
     </form>
   );
 }
