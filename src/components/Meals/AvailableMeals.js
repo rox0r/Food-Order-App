@@ -33,10 +33,16 @@ const DUMMY_MEALS = [
 function AvailableMeals() {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [httpErr, setHttpErr] = useState();
 
   useEffect(() => {
     const fetchMeals = async () => {
       let response = await fetch(process.env.REACT_APP_DB_API);
+
+      if (!response.ok) {
+        throw new Error("Something went wrong");
+      }
+
       let responseData = await response.json();
 
       const loadedMeals = [];
@@ -48,13 +54,25 @@ function AvailableMeals() {
       setMeals(loadedMeals);
       setIsLoading(false);
     };
-    fetchMeals();
+
+    fetchMeals().catch((err) => {
+      setIsLoading(false);
+      setHttpErr(err.message);
+    });
   }, []);
 
   if (isLoading) {
     return (
       <section className={classes.mealsLoading}>
         <p>Loading...</p>
+      </section>
+    );
+  }
+
+  if (httpErr) {
+    return (
+      <section className={classes.httpErr}>
+        <p>Error: Something went wrong</p>
       </section>
     );
   }
