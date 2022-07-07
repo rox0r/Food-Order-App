@@ -6,7 +6,6 @@ import CardItem from "./CartItem";
 import Checkout from "./Checkout";
 
 import classes from "./Cart.module.css";
-import { toHaveFormValues } from "@testing-library/jest-dom/dist/matchers";
 
 function Cart(props) {
   const [isCheckingOut, setIsCheckingOut] = useState(false);
@@ -67,7 +66,7 @@ function Cart(props) {
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
-      {isCheckingOut && <Checkout cancelCheckout={cancelCheckoutHandler} />}
+      {isCheckingOut && <Checkout onCancel={cancelCheckoutHandler} />}
       {!isCheckingOut && modalActions}
     </Modal>
   );
